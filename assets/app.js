@@ -11,4 +11,18 @@ import './styles/app.css';
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
 
-console.log('Hello Webpack Encore! Edit me in assets/app.js');
+import Vue from 'vue'
+import Router from './js/router/router'
+import Layout from './js/layout/Layout'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+Vue.use(Vuetify)
+const app = new Vue({
+    el: '#app',
+    vuetify: new Vuetify({
+        iconfont: 'mdi', //|| 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
+    }),
+    router: Router,
+    components: { Layout }
+})
+export default new Vuetify(app)
