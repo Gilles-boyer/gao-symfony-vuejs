@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AttributionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AttributionRepository::class)
@@ -14,16 +15,19 @@ class Attribution
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"show_product", "attribution"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"show_product", "attribution"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"show_product", "attribution"})
      */
     private $time;
 
@@ -36,6 +40,7 @@ class Attribution
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="attributions")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"show_product", "attribution"})
      */
     private $client;
 
@@ -84,6 +89,7 @@ class Attribution
     {
         return $this->client;
     }
+
 
     public function setClient(?Client $client): self
     {

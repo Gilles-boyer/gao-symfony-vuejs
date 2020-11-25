@@ -5,30 +5,28 @@ namespace App\Controller;
 use App\Entity\Computer;
 use App\Repository\ComputerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Type;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ComputerController extends AbstractController
 {
     /**
-     * @Route("/api/computer/getAll", name="computerGetAll" , methods={"GET"})
+     * @Route("/api/computer/getAll/{date}", name="computerGetAll" , methods="GET")
      * 
      */
-    public function index(ComputerRepository $computer): Response
+    public function index($date,ComputerRepository $computerRepository): Response
     {
-        $computers = $computer->findAll();
-        //dd($computers);
-        return $this->json([
-            'data' => $computers
-        ],200,[], ['groups' => 'show_computer']);
+        $computer = new Computer;
+
+        $computer::$date = $date;
+        
+        $test = $computerRepository->findAll();
+
+        return $this->json($test ,200,[],['groups' => 'show_product']);
     }
 
     /**
@@ -42,7 +40,7 @@ class ComputerController extends AbstractController
         ValidatorInterface $validator ): Response
     {
         $dataNewComputer = $serializerInterface->deserialize($request->getContent(), Computer::class, 'json');
-
+        
         $errors = $validator->validate($dataNewComputer);
 
         if (count($errors) > 0) {

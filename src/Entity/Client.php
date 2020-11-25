@@ -18,7 +18,7 @@ class Client
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"show_client"})
+     * @Groups({"show_product", "attribution", "client"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class Client
      * @Assert\Type("string")
      * @Assert\Length(min=3)
      * @Assert\Length(max=100)
-     * @Groups({"show_client"})
+     * @Groups({"show_product", "attribution", "client"})
      */
     private $name;
 

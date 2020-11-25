@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ComputerRepository;
+use DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -18,7 +19,7 @@ class Computer
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"show_computer"})
+     * @Groups({"show_product", "list_product", "computer"})
      */
     private $id;
 
@@ -28,14 +29,18 @@ class Computer
      * @Assert\Type("string")
      * @Assert\Length(min=3)
      * @Assert\Length(max=100)
-     * @Groups({"show_computer"})
+     * @Groups({"show_product", "list_product", "computer"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Attribution::class, mappedBy="computer")
+     * @Groups({"show_product", "list_product"})
      */
     private $attributions;
+
+
+    public static $date;
 
     public function __construct()
     {
@@ -64,7 +69,11 @@ class Computer
      */
     public function getAttributions(): Collection
     {
-        return $this->attributions;
+        $date= self::$date;
+        return $this->attributions->filter(function($element) use ($date) {
+            $dat = new DateTime($date);
+            return $element->getDate() == $dat;
+        });
     }
 
     public function addAttribution(Attribution $attribution): self

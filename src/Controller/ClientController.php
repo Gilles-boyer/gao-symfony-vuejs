@@ -19,7 +19,7 @@ class ClientController extends AbstractController
      */
     public function index(ClientRepository $clients): Response
     {
-        return $this->json($clients->findAll(), 200, [], ['groups' => 'show_client']);
+        return $this->json($clients->findAll(), 200, [], ['groups' => 'client']);
     }
 
     /**
@@ -49,7 +49,7 @@ class ClientController extends AbstractController
         return $this->json([
             'error' => false,
             'computer' => $client,
-            'message' => "L'ordinateur est créé"
+            'message' => "Le client est créé"
         ], 200);
     }
 }
