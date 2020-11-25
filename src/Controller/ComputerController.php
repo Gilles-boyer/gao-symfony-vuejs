@@ -35,7 +35,11 @@ class ComputerController extends AbstractController
      * @Route("/api/computer/create", name="computerCreate" , methods={"POST"})
      * 
      */
-    public function createComputer(Request $request, SerializerInterface $serializerInterface, EntityManagerInterface $em, ValidatorInterface $validator): Response
+    public function createComputer(
+        Request $request, 
+        SerializerInterface $serializerInterface, 
+        EntityManagerInterface $em, 
+        ValidatorInterface $validator ): Response
     {
         $dataNewComputer = $serializerInterface->deserialize($request->getContent(), Computer::class, 'json');
 
