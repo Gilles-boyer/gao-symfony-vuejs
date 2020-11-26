@@ -1,28 +1,43 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import Home from '../views/Home';
-import Login from '../views/Login';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import LoginPage from '../views/Login'
+import Home from '../views/Home.vue'
+import Store from '../store/index'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
+
+const routes = [{
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/login',
+        name: 'Login',
+
+        component: LoginPage
+    },
+    // otherwise redirect to login
+    { path: '*', redirect: '/login' }
+]
+
 
 const router = new VueRouter({
     mode: 'history',
-    routes: [{
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login,
-        },
-        // otherwise redirect to home
-        {
-            path: '*',
-            redirect: '/'
-        }
-    ]
+    base: process.env.BASE_URL,
+    routes
+})
+router.beforeEach((to, from, next) => {
+    // redirect to login page if not logged in and trying to access a restricted page
+    const publicPages = ['/login'];
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = Store.state.connected;
+
+    if (authRequired && !loggedIn) {
+        return next('/login');
+    }
+
+    next();
 })
 
 export default router

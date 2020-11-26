@@ -16,12 +16,15 @@ import Router from './js/router/router'
 import Layout from './js/layout/Layout'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import store from './js/store'
+
 Vue.use(Vuetify)
 const app = new Vue({
     el: '#app',
     vuetify: new Vuetify({
         iconfont: 'mdi', //|| 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
     }),
+    store,
     router: Router,
     components: { Layout }
 })

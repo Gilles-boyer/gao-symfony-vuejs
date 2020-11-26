@@ -48,7 +48,7 @@ class ClientController extends AbstractController
 
         return $this->json([
             'error' => false,
-            'computer' => $client,
+            'client' => $client,
             'message' => "Le client est créé"
         ], 200);
     }

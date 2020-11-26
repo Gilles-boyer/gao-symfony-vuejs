@@ -36,7 +36,7 @@ class AttributionController extends AbstractController
         $errors = $validator->validate($dataRequest);
 
         if (count($errors) > 0) {
-            return $this->json($errors, 400);
+            return $this->json($errors, 200);
         }
 
         $attribution = new Attribution;
